@@ -548,7 +548,7 @@ export const comment = (() => {
         : (data.data ?? data.lists ?? []);
 
       if (items.length === 0) {
-        container.innerHTML = `<p class="text-center" style="padding-top: 10rem;">Lời chúc của Quý khách sẽ hiển thị ở đây</p>`;
+        container.innerHTML = `<p class="text-center" style="padding-top: 10rem;">Chúc mình mong nhận được lời chúc từ Quý khách ❤️</p>`;
         return;
       }
 
