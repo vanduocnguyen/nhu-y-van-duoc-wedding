@@ -64,17 +64,40 @@ export const image = (() => {
      * @returns {void}
      */
     const getByDefault = (el) => {
-        el.onerror = () => progress.invalid('image');
+        let counted = false;
+
+        el.onerror = () => {
+            if (counted) return;
+            counted = true;
+            progress.invalid('image');
+        };
         el.onload = () => {
+            if (counted) return;
+            counted = true;
             el.width = el.naturalWidth;
             el.height = el.naturalHeight;
             progress.complete('image');
         };
 
         if (el.complete && el.naturalWidth !== 0 && el.naturalHeight !== 0) {
+            counted = true;
             progress.complete('image');
         } else if (el.complete) {
-            progress.invalid('image');
+            // iOS Safari can set complete=true with naturalWidth=0 while still decoding.
+            // Use decode() to distinguish a true load failure from a pending decode.
+            el.decode()
+                .then(() => {
+                    if (counted) return;
+                    counted = true;
+                    el.width = el.naturalWidth;
+                    el.height = el.naturalHeight;
+                    progress.complete('image');
+                })
+                .catch(() => {
+                    if (counted) return;
+                    counted = true;
+                    progress.invalid('image');
+                });
         }
     };
 
