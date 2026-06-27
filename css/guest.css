@@ -18,8 +18,8 @@ html {
 .img-center-crop {
     width: 25rem;
     height: 25rem;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 25rem;
+    max-height: 25rem;
     object-fit: cover;
 }
 
