@@ -35,12 +35,9 @@ export const image = (() => {
      * @returns {Promise<void>}
      */
     const appendImage = (el, src) => loadedImage(src).then((img) => {
-        el.width = img.naturalWidth;
-        el.height = img.naturalHeight;
         el.classList.remove('opacity-0');
         el.src = img.src;
         img.remove();
-
         progress.complete('image');
     });
 
@@ -74,8 +71,6 @@ export const image = (() => {
         el.onload = () => {
             if (counted) return;
             counted = true;
-            el.width = el.naturalWidth;
-            el.height = el.naturalHeight;
             progress.complete('image');
         };
 
@@ -89,8 +84,6 @@ export const image = (() => {
                 .then(() => {
                     if (counted) return;
                     counted = true;
-                    el.width = el.naturalWidth;
-                    el.height = el.naturalHeight;
                     progress.complete('image');
                 })
                 .catch(() => {
