@@ -152,3 +152,32 @@ svg {
 .btn-wedding:hover .heart-right {
     transform: rotate(20deg) scale(1.25);
 }
+
+/* Chế độ sáng - nền hồng nhạt */
+html[data-bs-theme="light"] {
+    --bs-body-bg: #fff0f3;
+    --bs-body-color: #c2456e;
+}
+
+html[data-bs-theme="light"] .bg-white-black {
+    background-color: #fff0f3 !important;
+}
+
+html[data-bs-theme="light"] .bg-light-dark {
+    background-color: #ffe0e8 !important;
+}
+
+html[data-bs-theme="light"] .bg-theme-auto {
+    background-color: #ffe0e8 !important;
+}
+
+html[data-bs-theme="light"] .navbar,
+html[data-bs-theme="light"] .nav-link,
+html[data-bs-theme="light"] footer {
+    background-color: #fff0f3 !important;
+    color: #c2456e !important;
+}
+
+html[data-bs-theme="light"] .nav-link {
+    color: #c2456e !important;
+}
