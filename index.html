@@ -61,7 +61,7 @@
     <script src="./dist/guest.js"></script>
 </head>
 
-<body data-key="d9faced3377732b0edf19e90d1bde0cd5de04801c75eb41743" data-url="https://api.ulems.my.id/" data-audio="./assets/music/vaycuoi_erik.mp3" data-confetti="true" data-time="2026-08-01 10:00:00">
+<body data-key="d9faced3377732b0edf19e90d1bde0cd5de04801c75eb41743" data-url="https://script.google.com/macros/s/AKfycbxWuegkqjtwwg1EyHA1IS7QJ42xkomNp5d5EOIC5pRpBwHv-qXKdjuGLbngdrV6j4M/exec" data-audio="./assets/music/vaycuoi_erik.mp3" data-confetti="true" data-time="2026-08-01 10:00:00">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -731,6 +731,64 @@
             </div>
         </div>
     </div>
+<script>
+const GS_API = "https://script.google.com/macros/s/AKfycbxWuegkqjtwwg1EyHA1IS7QJ42xkomNp5d5EOIC5pRpBwHv-qXKdjuGLbngdrV6j4M/exec";
+
+// Gửi lời chúc
+document.addEventListener("DOMContentLoaded", function() {
+  const sendBtn = document.querySelector("[onclick*='comment.send']");
+  if (sendBtn) {
+    sendBtn.addEventListener("click", async function(e) {
+      e.stopImmediatePropagation();
+      const name = document.getElementById("form-name")?.value.trim();
+      const attendance = document.getElementById("form-presence")?.value;
+      const comment = document.getElementById("form-comment")?.value.trim();
+      if (!name) { alert("Vui lòng nhập họ tên!"); return; }
+      if (!comment) { alert("Vui lòng nhập lời chúc!"); return; }
+      try {
+        await fetch(GS_API, {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify({ name, attendance, comment }),
+        });
+        document.querySelector(".wish-success")?.classList.remove("d-none");
+        document.querySelector(".wish-error")?.classList.add("d-none");
+        document.getElementById("form-name").value = "";
+        document.getElementById("form-comment").value = "";
+      } catch(err) {
+        document.querySelector(".wish-error")?.classList.remove("d-none");
+      }
+    }, true);
+  }
+
+  // Xem lời chúc
+  const viewBtn = document.querySelector("[onclick*='comment.list']");
+  if (viewBtn) {
+    viewBtn.addEventListener("click", async function(e) {
+      e.stopImmediatePropagation();
+      const container = document.querySelector(".wish-list");
+      if (container) container.innerHTML = "<p style='text-align:center'>Đang tải...</p>";
+      try {
+        const res = await fetch(GS_API);
+        const json = await res.json();
+        if (!json.data || json.data.length === 0) {
+          if (container) container.innerHTML = "<p style='text-align:center'>Chưa có lời chúc nào.</p>";
+          return;
+        }
+        if (container) container.innerHTML = json.data.map(w => `
+          <div style="padding:0.75rem;margin-bottom:0.5rem;background:rgba(255,255,255,0.8);border-radius:0.5rem;">
+            <strong style="color:#c0392b">${w.name}</strong>
+            <span style="font-size:0.75rem;color:#888;margin-left:0.5rem">${w.attendance}</span>
+            <p style="margin:0.25rem 0 0;font-size:0.9rem">${w.comment}</p>
+          </div>
+        `).join("");
+      } catch(err) {
+        if (container) container.innerHTML = "<p style='color:red;text-align:center'>Không thể tải lời chúc.</p>";
+      }
+    }, true);
+  }
+});
+</script>
 </body>
 
 </html>
