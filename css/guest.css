@@ -181,3 +181,10 @@ html[data-bs-theme="light"] footer {
 html[data-bs-theme="light"] .nav-link {
     color: #c2456e !important;
 }
+
+html[data-bs-theme="light"] body,
+html[data-bs-theme="light"] div,
+html[data-bs-theme="light"] nav,
+html[data-bs-theme="light"] section {
+    background-color: #fff0f3 !important;
+}
