@@ -60,10 +60,15 @@ export const progress = (() => {
      */
     const invalid = (type) => {
         if (valid) {
-            // valid = false;
-            // bar.style.backgroundColor = 'red';
-            // info.innerText = `Error loading ${type} ${showInformation()}`;
-            // document.dispatchEvent(new Event('undangan.progress.invalid'));
+            valid = false;
+            loaded += 1;
+            info.innerText = `Loading ${type} complete ${showInformation()}`;
+            bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
+
+            if (loaded === total) {
+                cancelProgress = null;
+                document.dispatchEvent(new Event('undangan.progress.done'));
+            }
         }
     };
 
