@@ -324,7 +324,7 @@ export const guest = (() => {
                 };
 
                 document.addEventListener('undangan.progress.done', () => safeBoot());
-                setTimeout(() => safeBoot(), 3000);
+                setTimeout(() => safeBoot(), 500);
         document.addEventListener('hide.bs.modal', () => document.activeElement?.blur());
         document.getElementById('button-modal-download').addEventListener('click', (e) => {
             img.download(e.currentTarget.getAttribute('data-src'));
