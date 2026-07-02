@@ -24,8 +24,9 @@ export const image = (() => {
      */
     const loadedImage = (src) => new Promise((res, rej) => {
         const i = new Image();
-        i.onload = () => res(i);
-        i.onerror = rej;
+        const timer = setTimeout(() => rej(new Error('timeout')), 10000); // 10 giây
+        i.onload = () => { clearTimeout(timer); res(i); };
+        i.onerror = () => { clearTimeout(timer); rej(new Error('error')); };
         i.src = src;
     });
 
