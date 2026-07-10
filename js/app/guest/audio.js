@@ -62,6 +62,8 @@ export const audio = (() => {
             }
         };
 
+        playFunc = play; // thêm dòng này
+
         /**
          * @returns {void}
          */
@@ -101,11 +103,14 @@ export const audio = (() => {
     /**
      * @returns {object}
      */
+    let playFunc = null;
+
     const init = () => {
         progress.add();
 
         return {
             load,
+            play: () => playFunc && playFunc(),
         };
     };
 
