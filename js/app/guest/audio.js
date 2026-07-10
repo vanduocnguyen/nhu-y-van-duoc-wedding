@@ -71,11 +71,26 @@ export const audio = (() => {
             music.innerHTML = statePause;
         };
 
+        let openPending = false;
+        let audioReady = false;
+
+        audioEl.addEventListener('canplaythrough', () => {
+            audioReady = true;
+            if (openPending) {
+                openPending = false;
+                play();
+            }
+        }, { once: true });
+
         document.addEventListener('undangan.open', () => {
             music.classList.remove('d-none');
 
             if (playOnOpen) {
-                play();
+                if (audioReady) {
+                    play();
+                } else {
+                    openPending = true;
+                }
             }
         });
 
