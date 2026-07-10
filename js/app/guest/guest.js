@@ -25,6 +25,7 @@ export const guest = (() => {
      * @type {ReturnType<typeof storage>|null}
      */
     let config = null;
+    let audRef = null;
 
     /**
      * @returns {void}
@@ -167,6 +168,7 @@ export const guest = (() => {
      */
     const open = (button) => {
         button.disabled = true;
+        audRef?.play();  // thêm dòng này
         document.body.scrollIntoView({ behavior: 'instant' });
         document.getElementById('root').classList.remove('opacity-0');
 
@@ -310,7 +312,8 @@ export const guest = (() => {
 
         const vid = video.init();
         const img = image.init();
-        const aud = audio.init();
+        audRef = audio.init();
+        const aud = audRef;
         const lib = loaderLibs();
         const token = document.body.getAttribute('data-key');
         const params = new URLSearchParams(window.location.search);
