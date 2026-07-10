@@ -50,7 +50,9 @@ export const audio = (() => {
 
             music.disabled = true;
             try {
+                audioEl.muted = true;
                 await audioEl.play();
+                audioEl.muted = false;
                 isPlay = true;
                 music.disabled = false;
                 music.innerHTML = statePlay;
